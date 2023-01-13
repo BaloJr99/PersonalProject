@@ -6,22 +6,32 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PersonalProject.Business.Interfaces;
 
 namespace PersonalProject.Client.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Medical Services")]
     public class MedicalAppointmentsController : Controller
     {
         private readonly ILogger<MedicalAppointmentsController> _logger;
+        private readonly IMedicalAppointmentsService _medical;
 
-        public MedicalAppointmentsController(ILogger<MedicalAppointmentsController> logger)
+        public MedicalAppointmentsController(ILogger<MedicalAppointmentsController> logger, IMedicalAppointmentsService medical)
         {
             _logger = logger;
+            _medical = medical;
         }
 
         public IActionResult Index()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAppointments()
+        {
+
+            return Ok();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

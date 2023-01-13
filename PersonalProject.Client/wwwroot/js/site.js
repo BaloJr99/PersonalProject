@@ -16,10 +16,10 @@ $(document).ready(() => {
 
 const errorMessage = (xhr, textStatus, errorThrown) => {
     $("body").waitMe("hide");
-    var message = `<b>Fatal Error</b>`;
+    var message = `<b>${xhr.responseText.split("\r")[0]} <br> ${errorThrown}</b>`;
 
     $.alert({
-        title: "Fatal Error",
+        title: `Error ${xhr.status}`,
         content: message,
         type: "red",
         theme: "modern",

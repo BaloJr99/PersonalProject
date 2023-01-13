@@ -28,12 +28,12 @@ body{
     margin-bottom: 20px;
 }
 
-.regForm input{
+.regForm input, .regForm select, .form-group input, .form-group select{
     background: rgb(238, 238, 238);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     margin-bottom: 10px;
 }
 
-input.input-validation-error {
+input.input-validation-error, select.input-validation-error {
     border: 2px solid red;
 }

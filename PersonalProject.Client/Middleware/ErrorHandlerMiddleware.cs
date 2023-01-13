@@ -21,6 +21,7 @@ namespace PersonalProject.Client.Middleware
             string message = GetDefaultMessageForStatus(statusCode);
             if(statusCode == StatusCodes.Status403Forbidden || statusCode == StatusCodes.Status401Unauthorized)
                 context.Response.Redirect($"{context.Request.Scheme}://{context.Request.Host}/Error/Index?statusCode={statusCode}%20-%20{message}&errorMessage=You%20are%20trying%20to%20access%20an%20unauthorized%20site");
+
         }
 
         public string GetDefaultMessageForStatus(int statusCode){

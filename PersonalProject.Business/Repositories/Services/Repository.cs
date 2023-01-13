@@ -62,5 +62,15 @@ namespace PersonalProject.Business.Repositories.Services
         {
             return await _Context.Set<TEntity>().SingleOrDefaultAsync(predicate);
         }
+
+        public async Task<int> CountWhere(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _Context.Set<TEntity>().CountAsync(predicate);
+        }
+
+        public IQueryable<TEntity> AsQueryable()
+        {
+            return _Context.Set<TEntity>().AsQueryable();
+        }
     }
 }

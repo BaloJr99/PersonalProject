@@ -1,15 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using PersonalProject.Data.DTO;
 
 namespace PersonalProject.Business.Interfaces
 {
-    public interface IJwtUtils
+    public interface IEmployeeService
     {
-        string GenerateToken(UserDTO user);
-        JwtSecurityToken ValidateToken(string token);
+        Task<IEnumerable<EmployeeDTO>> GetAllEmployees();
+        Task SaveEmployee(EmployeeDTO employeeDTO, AddressDTO addressDTO);
     }
 }

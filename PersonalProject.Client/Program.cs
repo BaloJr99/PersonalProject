@@ -50,6 +50,7 @@ builder.Services.AddScoped<IJwtUtils, JwtUtils>();
 builder.Services.AddScoped<IUnitOfWorkPersonal, UnitOfWork>();
 builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddDbContext<MedicalContext>(options => {
     options.UseSqlServer(_configuration.GetConnectionString("MedicalContext"));
     //Enable to get Error messages from the server

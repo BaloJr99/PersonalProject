@@ -27,5 +27,7 @@ namespace PersonalProject.Business.Repositories.Interfaces
         Task AddRangeAsync(IEnumerable<TEntity> entities);
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
+        IQueryable<TEntity> AsQueryable();
+        Task<int> CountWhere(Expression<Func<TEntity, bool>> predicate);
     }
 }

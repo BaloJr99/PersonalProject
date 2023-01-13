@@ -63,12 +63,16 @@ namespace PersonalProject.Client.Controllers
             var user = await _authenticate.CreateUser(userDTO);
             var token = _jwtUtils.GenerateToken(user);
             if(token != null)
+                HttpContext.Session.SetString("Token", token);
                 Response.Cookies.Append("X-Access-Token", token, new CookieOptions(){ HttpOnly = true, SameSite = SameSiteMode.Strict });
             return Ok(new {success = true });
         }
 
         public IActionResult SignIn()
         {
+            if(User.Identity.IsAuthenticated){
+                return RedirectToAction("Index", "Home"); 
+            }
             return View();
         }
 

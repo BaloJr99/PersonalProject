@@ -35,9 +35,23 @@ namespace PersonalProject.Business.Services
         public async Task<UserDTO> CreateUser(UserDTO userDTO)
         {
             User user = _mapper.Map<User>(userDTO);
-            await _uok.GetRepository<User>().AddAsync(user);
-            await _uok.SaveChangesAsync();
+            if(await validateUser(user)){
+                await _uok.GetRepository<User>().AddAsync(user);
+                await _uok.SaveChangesAsync();
+            }
             return _mapper.Map<UserDTO>(user);
+        }
+
+        private async Task<bool> validateUser(User user){
+            var employeeHasUser = await _uok.GetRepository<User>().CountWhere(x => x.IdEmployee == user.IdEmployee);
+            var userIsRegistrated = await _uok.GetRepository<User>().CountWhere(x => x.Username == user.Username);
+
+            if(employeeHasUser > 0)
+                throw new ApplicationException("This employee already has an user");
+            if(userIsRegistrated > 0)
+                throw new ApplicationException("This user is already registrated");
+            
+            return true;
         }
     }
 }
