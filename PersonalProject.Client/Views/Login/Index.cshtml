@@ -1,0 +1,50 @@
+@using PersonalProject.Data.DTO
+@model UserDTO
+
+@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="~/css/login.css">
+        <link type="text/css" rel="stylesheet" href="~/js/waitMe/waitMe.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+    </head>
+    <body>
+        <div class="box">
+            <div class="form">
+                <form action="" id="frmLogin" onsubmit="return false;">
+                    <h2>Sign in</h2>
+                    <div class="inputBox">
+                        <input asp-for="Username" type="text" required="required" autocomplete="off">
+                        <span>Username</span>
+                        <i></i>
+                    </div>
+                    <div class="inputBox">
+                        <input asp-for="Password" type="password" required="required">
+                        <span>Password</span>
+                        <i></i>
+                    </div>  
+                    <div class="links">
+                        <a href="#">Forgot Password</a>
+                        <a href="/Login/SignIn">Signup</a>
+                    </div>
+                    <input type="submit" value="Login" id="btnLogin">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+<script src="~/js/waitMe/waitMe.js"></script>
+<script src="~/js/authenticate/signUp.js"></script>
+<script src="~/js/site.js"></script>

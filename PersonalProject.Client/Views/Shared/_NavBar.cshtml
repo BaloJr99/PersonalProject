@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+    <div class="container-fluid p-2">
+       <div class="text-center flex-fill">
+            <a class="navbar-brand text-light" id="navHeader" asp-area="" asp-controller="Home" asp-action="Index">
+                <h3 class="d-flex align-items-center m-0">
+                    <span class="material-symbols-outlined fs-3">health_and_safety</span>
+                    &nbsp Consultorio Médico
+                </h3>
+            </a>
+       </div>
+        <div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDarkDropdown" aria-controls="navbarNavDarkDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" style="width: 150px;" data-bs-toggle="dropdown" aria-expanded="false">
+                            @(User.Identity.IsAuthenticated ? User.Identity.Name : "Invitado")
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
+                            @if(!User.Identity.IsAuthenticated){
+                                <li><a class="dropdown-item" href="/Login">Iniciar Sesión</a></li>
+                            }else{
+                                <li><a class="dropdown-item" id="btnLogout">Cerrar Sesión</a></li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>

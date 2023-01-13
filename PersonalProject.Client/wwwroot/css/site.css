@@ -1,0 +1,28 @@
+input.input-validation-error {
+    border: 2px solid red;
+}
+
+#modules{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.card{
+  background-color: rgba(211, 211, 211, 0.178);
+  height: 200px;
+  box-shadow: 20px;
+}
+
+.card > a {
+  height: 100%;
+  text-decoration: none;
+  color: #984447;
+}
+
+#navHeader{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
