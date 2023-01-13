@@ -6,8 +6,8 @@ using PersonalProject.Data.DTO;
 
 namespace PersonalProject.Business.Interfaces
 {
-    public interface IMedicalAppointmentsService
+    public interface IPatientService
     {
-        Task<IEnumerable<PatientsAppointmentDTO>> GetTodayMedicalAppointments();
+        Task<IEnumerable<PatientDTO>> GetAllPatients();
     }
 }

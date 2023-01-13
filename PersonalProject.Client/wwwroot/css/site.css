@@ -26,3 +26,7 @@ input.input-validation-error {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.form-group input, .form-group select{
+  margin-bottom: 10px;
+}

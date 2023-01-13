@@ -47,7 +47,7 @@
 
 ## Scaffold Database
 
-- dotnet ef dbcontext scaffold "Data Source=;Initial Catalog=;Encrypt=False;User Id=;Password=;" Microsoft.EntityFrameworkCore.SqlServer -o "Models" --force
+- dotnet ef dbcontext scaffold "Data Source=BRAULIOJR\\SQLEXPRESS;Initial Catalog=medical;User Id=sa;Password=Pirata99*;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer -o "Models" --force
 
 ## Git Commands
 
@@ -59,4 +59,6 @@ git remote add origin <https://github.com/BaloJr99/PersonalProject.git>
 git push -u origin main
 git branch
 git checkout -b newBranchName
+git switch branchName
+git branch --delete  branchName
 git merge mergeBranch

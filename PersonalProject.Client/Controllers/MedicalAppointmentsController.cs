@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PersonalProject.Business.Interfaces;
+using PersonalProject.Data.DTO;
 
 namespace PersonalProject.Client.Controllers
 {
@@ -28,10 +29,10 @@ namespace PersonalProject.Client.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAppointments()
+        public async Task<IActionResult> GetTodayAppointments()
         {
-
-            return Ok();
+            IEnumerable<PatientsAppointmentDTO> patients = await _medical.GetTodayMedicalAppointments();
+            return Ok(patients);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

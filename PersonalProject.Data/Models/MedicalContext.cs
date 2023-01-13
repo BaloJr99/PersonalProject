@@ -27,7 +27,7 @@ public partial class MedicalContext : DbContext
 
     public virtual DbSet<PatientDiagnosis> PatientDiagnoses { get; set; }
 
-    public virtual DbSet<PatientsAppointMent> PatientsAppointMents { get; set; }
+    public virtual DbSet<PatientsAppointment> PatientsAppointments { get; set; }
 
     public virtual DbSet<PatientsHistory> PatientsHistories { get; set; }
 
@@ -37,13 +37,13 @@ public partial class MedicalContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=BRAULIOJR\\SQLEXPRESS;Initial Catalog=medical;Encrypt=False;User Id=sa;Password=Pirata99*");
+        => optionsBuilder.UseSqlServer("Data Source=BRAULIOJR\\SQLEXPRESS;Initial Catalog=medical;User Id=sa;Password=Pirata99*;Encrypt=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Address>(entity =>
         {
-            entity.HasKey(e => e.IdAddress).HasName("PK__Addresse__67E8C78CDEACAC84");
+            entity.HasKey(e => e.IdAddress).HasName("PK__Addresse__67E8C78C29362B92");
 
             entity.Property(e => e.IdAddress)
                 .HasDefaultValueSql("(newid())")
@@ -76,7 +76,7 @@ public partial class MedicalContext : DbContext
 
         modelBuilder.Entity<DoctorSchedule>(entity =>
         {
-            entity.HasKey(e => e.IdDoctorSchedule).HasName("PK__DoctorSc__1D787F562E2D63D9");
+            entity.HasKey(e => e.IdDoctorSchedule).HasName("PK__DoctorSc__1D787F56D590108A");
 
             entity.Property(e => e.IdDoctorSchedule)
                 .HasDefaultValueSql("(newid())")
@@ -97,7 +97,7 @@ public partial class MedicalContext : DbContext
 
         modelBuilder.Entity<Employee>(entity =>
         {
-            entity.HasKey(e => e.IdEmployee).HasName("PK__Employee__227F26A59DC794B4");
+            entity.HasKey(e => e.IdEmployee).HasName("PK__Employee__227F26A5E1EA0154");
 
             entity.Property(e => e.IdEmployee)
                 .HasDefaultValueSql("(newid())")
@@ -137,7 +137,7 @@ public partial class MedicalContext : DbContext
 
         modelBuilder.Entity<MedicalHistory>(entity =>
         {
-            entity.HasKey(e => e.IdMedicalHistories).HasName("PK__MedicalH__834157AD4606D960");
+            entity.HasKey(e => e.IdMedicalHistories).HasName("PK__MedicalH__834157AD9481D0BF");
 
             entity.Property(e => e.IdMedicalHistories)
                 .HasDefaultValueSql("(newid())")
@@ -161,7 +161,7 @@ public partial class MedicalContext : DbContext
 
         modelBuilder.Entity<Patient>(entity =>
         {
-            entity.HasKey(e => e.IdPatient).HasName("PK__Patients__8C242805381E051E");
+            entity.HasKey(e => e.IdPatient).HasName("PK__Patients__8C242805C2AC044D");
 
             entity.Property(e => e.IdPatient)
                 .HasDefaultValueSql("(newid())")
@@ -192,7 +192,7 @@ public partial class MedicalContext : DbContext
 
         modelBuilder.Entity<PatientDiagnosis>(entity =>
         {
-            entity.HasKey(e => e.IdPatientDiagnose).HasName("PK__PatientD__DA6B2723594AD0A1");
+            entity.HasKey(e => e.IdPatientDiagnose).HasName("PK__PatientD__DA6B27238D055E01");
 
             entity.Property(e => e.IdPatientDiagnose)
                 .HasDefaultValueSql("(newid())")
@@ -201,8 +201,8 @@ public partial class MedicalContext : DbContext
                 .HasMaxLength(200)
                 .IsUnicode(false)
                 .HasColumnName("diagnose");
-            entity.Property(e => e.IdAppointMent).HasColumnName("idAppointMent");
             entity.Property(e => e.IdDoctor).HasColumnName("idDoctor");
+            entity.Property(e => e.IdPatientAppointment).HasColumnName("idPatientAppointment");
             entity.Property(e => e.Prescription)
                 .HasMaxLength(200)
                 .IsUnicode(false)
@@ -212,36 +212,42 @@ public partial class MedicalContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("symptoms");
 
-            entity.HasOne(d => d.IdAppointMentNavigation).WithMany(p => p.PatientDiagnoses)
-                .HasForeignKey(d => d.IdAppointMent)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_PatientDiagnoses_PatientsAppointMents");
-
             entity.HasOne(d => d.IdDoctorNavigation).WithMany(p => p.PatientDiagnoses)
                 .HasForeignKey(d => d.IdDoctor)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_PatientDiagnoses_Users");
+
+            entity.HasOne(d => d.IdPatientAppointmentNavigation).WithMany(p => p.PatientDiagnoses)
+                .HasForeignKey(d => d.IdPatientAppointment)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PatientDiagnoses_PatientsAppointments");
         });
 
-        modelBuilder.Entity<PatientsAppointMent>(entity =>
+        modelBuilder.Entity<PatientsAppointment>(entity =>
         {
-            entity.HasKey(e => e.IdAppointMent).HasName("PK__Patients__5A6B481DACB448F5");
+            entity.HasKey(e => e.IdPatientsAppointments).HasName("PK__Patients__1C03D0AE13CED47F");
 
-            entity.Property(e => e.IdAppointMent)
+            entity.Property(e => e.IdPatientsAppointments)
                 .HasDefaultValueSql("(newid())")
-                .HasColumnName("idAppointMent");
-            entity.Property(e => e.AppointMentStatus)
+                .HasColumnName("idPatientsAppointments");
+            entity.Property(e => e.AppointmentStatus)
                 .IsRequired()
                 .HasDefaultValueSql("((1))")
-                .HasColumnName("appointMentStatus");
+                .HasColumnName("appointmentStatus");
             entity.Property(e => e.AssignationDate)
                 .HasColumnType("datetime")
                 .HasColumnName("assignationDate");
+            entity.Property(e => e.IdPatient).HasColumnName("idPatient");
+
+            entity.HasOne(d => d.IdPatientNavigation).WithMany(p => p.PatientsAppointments)
+                .HasForeignKey(d => d.IdPatient)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_PatientsAppointments_Patients");
         });
 
         modelBuilder.Entity<PatientsHistory>(entity =>
         {
-            entity.HasKey(e => e.IdPatientsHistory).HasName("PK__Patients__285A25EDD6DFF913");
+            entity.HasKey(e => e.IdPatientsHistory).HasName("PK__Patients__285A25ED6DF4C84F");
 
             entity.ToTable("PatientsHistory");
 
@@ -264,7 +270,7 @@ public partial class MedicalContext : DbContext
 
         modelBuilder.Entity<Schedule>(entity =>
         {
-            entity.HasKey(e => e.IdSchedule).HasName("PK__Schedule__5717CA94D8F0A52A");
+            entity.HasKey(e => e.IdSchedule).HasName("PK__Schedule__5717CA94E3CED5FB");
 
             entity.Property(e => e.IdSchedule)
                 .HasDefaultValueSql("(newid())")
@@ -287,7 +293,7 @@ public partial class MedicalContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.IdUser).HasName("PK__Users__3717C98274F7DFC4");
+            entity.HasKey(e => e.IdUser).HasName("PK__Users__3717C982E334FCCE");
 
             entity.Property(e => e.IdUser)
                 .HasDefaultValueSql("(newid())")

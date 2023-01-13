@@ -1,13 +1,51 @@
+@using PersonalProject.Data.DTO
+@model SearchPatientsAppointments
+
 <h3>Medical Appointments</h3>
 
-<form action="">
-    <div class="card">
+<form onsubmit="return false;" id="appointmentsForm">
+    <div class="card h-auto">
         <div class="card-body">
-            
+            <div class="row">
+                <div class="col-auto">
+                    <label asp-for="InitialAssignationDate"></label>
+                    <input type="date" class="form-control" asp-for="InitialAssignationDate">
+                </div>
+                <div class="col-auto">
+                    <label asp-for="FinalAssignationDate"></label>
+                    <input type="date" class="form-control" asp-for="FinalAssignationDate">
+                </div>
+                <div class="col">
+                    <label asp-for="PatientFullName"></label>
+                    <input type="text" class="form-control" asp-for="PatientFullName">
+                </div>
+                <div class="col-auto">
+                    <br>
+                    <button class="btn btn-primary">Search</button>
+                </div>
+            </div>
         </div>
     </div>
 </form>
 
+<div class="container-fluid mt-2">
+    <div class="row">
+        <div class="col d-flex justify-content-end">
+            <button class="btn btn-primary d-flex" id="btnAppointmentModal">
+                <span class="material-symbols-outlined">add
+                </span> Appointments
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-2">
+    <table id="appointmentsTable">
+
+    </table>
+</div>
+
+@{await Html.RenderPartialAsync("_AppointmentForm.cshtml");}
 
 @section Scripts{
     <script src="~/js/medicalAppointments/medicalAppointments.js"></script>

@@ -1,5 +1,3 @@
-DROP TABLE IF EXISTS Users
-
 CREATE TABLE Addresses (
     idAddress UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
 	street VARCHAR (100) NOT NULL,
@@ -63,23 +61,26 @@ CREATE TABLE PatientsHistory (
 ALTER TABLE PatientsHistory ADD CONSTRAINT FK_PatientsHistory_Patients FOREIGN KEY (idPatient) REFERENCES Patients(idPatient)
 ALTER TABLE PatientsHistory ADD CONSTRAINT FK_PatientsHistory_MedicalHistories FOREIGN KEY (idHistory) REFERENCES MedicalHistories(idMedicalHistories)
 
-CREATE TABLE PatientsAppointMents (
-	idAppointMent UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+CREATE TABLE PatientsAppointments (
+	idPatientsAppointments UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
+	idPatient UNIQUEIDENTIFIER NOT NULL,
 	assignationDate DATETIME NOT NULL,
-	appointMentStatus BIT NOT NULL DEFAULT 1,
+	appointmentStatus BIT NOT NULL DEFAULT 1,
 )
+
+ALTER TABLE PatientsAppointments ADD CONSTRAINT FK_PatientsAppointments_Patients FOREIGN KEY (idPatient) REFERENCES Patients(idPatient)
 
 CREATE TABLE PatientDiagnoses (
 	idPatientDiagnose UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-	idAppointMent UNIQUEIDENTIFIER NOT NULL,
+	idPatientAppointment UNIQUEIDENTIFIER NOT NULL,
 	idDoctor UNIQUEIDENTIFIER NOT NULL,
 	symptoms VARCHAR(200),
 	diagnose VARCHAR(200),
 	prescription VARCHAR(200)
 )
 
+ALTER TABLE PatientDiagnoses ADD CONSTRAINT FK_PatientDiagnoses_PatientsAppointments FOREIGN KEY (idPatientAppointment) REFERENCES PatientsAppointments(idPatientsAppointments)
 ALTER TABLE PatientDiagnoses ADD CONSTRAINT FK_PatientDiagnoses_Users FOREIGN KEY (idDoctor) REFERENCES Users(idUser)
-ALTER TABLE PatientDiagnoses ADD CONSTRAINT FK_PatientDiagnoses_PatientsAppointMents FOREIGN KEY (idAppointMent) REFERENCES PatientsAppointMents(idAppointMent)
 
 CREATE TABLE Schedules (
 	idSchedule UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),

@@ -7,7 +7,7 @@ public partial class PatientDiagnosis
 {
     public Guid IdPatientDiagnose { get; set; }
 
-    public Guid IdAppointMent { get; set; }
+    public Guid IdPatientAppointment { get; set; }
 
     public Guid IdDoctor { get; set; }
 
@@ -17,7 +17,7 @@ public partial class PatientDiagnosis
 
     public string? Prescription { get; set; }
 
-    public virtual PatientsAppointMent IdAppointMentNavigation { get; set; } = null!;
-
     public virtual User IdDoctorNavigation { get; set; } = null!;
+
+    public virtual PatientsAppointment IdPatientAppointmentNavigation { get; set; } = null!;
 }

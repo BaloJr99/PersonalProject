@@ -19,5 +19,7 @@ public partial class Patient
 
     public virtual Address IdAddressNavigation { get; set; } = null!;
 
+    public virtual ICollection<PatientsAppointment> PatientsAppointments { get; } = new List<PatientsAppointment>();
+
     public virtual ICollection<PatientsHistory> PatientsHistories { get; } = new List<PatientsHistory>();
 }
