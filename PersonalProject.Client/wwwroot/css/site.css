@@ -21,6 +21,10 @@ input.input-validation-error {
   color: #984447;
 }
 
+.card span.material-symbols-outlined{
+  margin: 10px 0px;
+}
+
 #navHeader{
   position: absolute;
   left: 50%;

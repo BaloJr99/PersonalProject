@@ -9,5 +9,6 @@ namespace PersonalProject.Business.Interfaces
     public interface IMedicalAppointmentsService
     {
         Task<IEnumerable<PatientsAppointmentDTO>> GetTodayMedicalAppointments();
+        Task SaveAppointment(PatientsAppointmentDTO appointmentDTO);
     }
 }

@@ -23,13 +23,15 @@ const errorMessage = (xhr, textStatus, errorThrown) => {
         content: message,
         type: "red",
         theme: "modern",
+        columnClass: 'medium'
     });
 }
 
 const successAlert = message => {
     $.alert({
         title: "Alert",
-        content: "Simple Alert!"
+        content: message,
+        type: "green"
     });
 }
 

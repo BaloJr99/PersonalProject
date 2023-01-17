@@ -35,6 +35,14 @@ namespace PersonalProject.Client.Controllers
             return Ok(patients);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SaveAppointment([FromForm]PatientsAppointmentDTO appointmentDTO)
+        {
+            appointmentDTO.AppointmentStatus = true;
+            await _medical.SaveAppointment(appointmentDTO);
+            return Ok(new {success = true});
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

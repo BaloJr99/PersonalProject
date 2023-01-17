@@ -72,5 +72,27 @@ namespace PersonalProject.Business.Repositories.Services
         {
             return _Context.Set<TEntity>().AsQueryable();
         }
+
+        public async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params string[] includeProperties)
+        {
+            IQueryable<TEntity> query = _Context.Set<TEntity>();
+    
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+    
+            if (includeProperties.Length > 0)
+            {
+                query = includeProperties.Aggregate(query, (theQuery, theInclude) => theQuery.Include(theInclude));
+            }
+    
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+    
+            return await query.ToListAsync();
+        }
     }
 }

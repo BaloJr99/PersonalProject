@@ -48,6 +48,7 @@
 ## Scaffold Database
 
 - dotnet ef dbcontext scaffold "Data Source=BRAULIOJR\\SQLEXPRESS;Initial Catalog=medical;User Id=sa;Password=Pirata99*;Encrypt=False" Microsoft.EntityFrameworkCore.SqlServer -o "Models" --force
+- dotnet-aspnet-codegenerator view _PatientForm Create -m Patient -dc MedicalContext -outDir Views/Patients
 
 ## Git Commands
 

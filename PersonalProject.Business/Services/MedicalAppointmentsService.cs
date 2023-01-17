@@ -21,10 +21,19 @@ namespace PersonalProject.Business.Services
             _uok = uok;
             _mapper = mapper;
         }
+
         public async Task<IEnumerable<PatientsAppointmentDTO>> GetTodayMedicalAppointments()
         {
-            IEnumerable<PatientsAppointment> appointments = await _uok.GetRepository<PatientsAppointment>().GetWhereAsync(x => x.AssignationDate == DateTime.Today);
+            var todayMorning = DateTime.Now.Date;
+            var todayAfterNoon = todayMorning.AddHours(24);
+            IEnumerable<PatientsAppointment> appointments = await _uok.GetRepository<PatientsAppointment>().GetAsync(x => x.AssignationDate >= todayMorning && x.AssignationDate <= todayAfterNoon && x.AppointmentStatus == true, includeProperties: "IdPatientNavigation");
             return _mapper.Map<IEnumerable<PatientsAppointmentDTO>>(appointments);
+        }
+        
+        public async Task SaveAppointment(PatientsAppointmentDTO appointmentDTO){
+            PatientsAppointment appointment = _mapper.Map<PatientsAppointment>(appointmentDTO);
+            await _uok.GetRepository<PatientsAppointment>().AddAsync(appointment);
+            await _uok.SaveChangesAsync();
         }
     }
 }

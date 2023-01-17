@@ -20,6 +20,14 @@
                     <input type="text" class="form-control" asp-for="PatientFullName">
                 </div>
                 <div class="col-auto">
+                    <label asp-for="Status"></label>
+                    <select class="form-select" asp-for="Status">
+                        <option value="">Seleccione...</option>
+                        <option value="0">Activo</option>
+                        <option value="1">Inactivo</option>
+                    </select>
+                </div>
+                <div class="col-auto">
                     <br>
                     <button class="btn btn-primary">Search</button>
                 </div>

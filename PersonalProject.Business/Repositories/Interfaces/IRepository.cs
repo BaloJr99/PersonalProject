@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using PersonalProject.Data.Models;
 
 namespace PersonalProject.Business.Repositories.Interfaces
 {
@@ -29,5 +30,8 @@ namespace PersonalProject.Business.Repositories.Interfaces
         void RemoveRange(IEnumerable<TEntity> entities);
         IQueryable<TEntity> AsQueryable();
         Task<int> CountWhere(Expression<Func<TEntity, bool>> predicate);
+        Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null!,
+                                      Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null!,
+                                      params string[] includeProperties);
     }
 }

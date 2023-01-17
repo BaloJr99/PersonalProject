@@ -1,0 +1,56 @@
+@using PersonalProject.Data.DTO
+@model SearchPatient
+
+<h3>Patients</h3>
+
+<form onsubmit="return false;" id="patientsForm">
+    <div class="card h-auto">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-auto" style="width: 200px;">
+                    <label asp-for="Gender" class="control-label"></label>
+                    <select asp-for="Gender" class="form-control">
+                        <option value="">Select...</option>
+                        <option value="M">Male</option>
+                        <option value="F">Female</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <label asp-for="FullName"></label>
+                    <input type="text" class="form-control" asp-for="FullName">
+                </div>
+                <div class="col-auto" style="width: 200px;">
+                    <label asp-for="Birthday"></label>
+                    <input type="date" class="form-control" asp-for="Birthday">
+                </div>
+                <div class="col-auto">
+                    <br>
+                    <button class="btn btn-primary" id="btnSearchPatient">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="container-fluid mt-2">
+    <div class="row">
+        <div class="col d-flex justify-content-end">
+            <button class="btn btn-primary d-flex" id="btnAddNewPatient">
+                <span class="material-symbols-outlined">add
+                </span> Patient
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mt-2">
+    <table id="patientsTable">
+
+    </table>
+</div>
+
+@{await Html.RenderPartialAsync("_PatientForm.cshtml");}
+
+@section Scripts{
+    <script src="~/js/patients/patient.js"></script>
+}
