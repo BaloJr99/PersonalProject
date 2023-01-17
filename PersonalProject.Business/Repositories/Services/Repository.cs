@@ -94,5 +94,16 @@ namespace PersonalProject.Business.Repositories.Services
     
             return await query.ToListAsync();
         }
+
+        public void Update(TEntity entity, string excludeProperties = null!){
+            _Context.Set<TEntity>().Attach(entity);
+            _Context.Entry(entity).State = EntityState.Modified;
+            if(!string.IsNullOrEmpty(excludeProperties)){
+                string[] excludingProperties = excludeProperties.Split(",");
+                foreach(var property in excludingProperties){
+                    _Context.Entry(entity).Property(property).IsModified = false;
+                }
+            }
+        }
     }
 }

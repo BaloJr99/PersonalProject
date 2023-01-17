@@ -43,6 +43,13 @@ namespace PersonalProject.Client.Controllers
             return Ok(new {success = true});
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SearchAppointments([FromForm]SearchPatientsAppointments search)
+        {
+            IEnumerable<PatientsAppointmentDTO> appointments = await _medical.SearchAppointments(search);
+            return Ok(appointments);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

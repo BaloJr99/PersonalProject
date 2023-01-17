@@ -8,6 +8,9 @@ $(document).ready(() => {
 
 var table = undefined;
 
+/**
+ * It takes the data from the form, sends it to the server, and then displays the results in a table.
+ */
 const searchPatients = () => {
     if($("#patientsForm").valid()){
         $("body").waitMe({text: "Getting Matching Patients"});
@@ -53,6 +56,9 @@ const searchPatients = () => {
     }
 }
 
+/**
+ * It shows a modal with a form to create or edit a patient.
+ */
 const showPatientModal = e => {
     var id = $(e.currentTarget).data("id");
     if(id == undefined){
@@ -60,6 +66,7 @@ const showPatientModal = e => {
     }else{
         $("body").waitMe({text: "Getting Patient Data"});
         $.ajax({url: `/Patients/GetPatient/${id}`}).done((patient) => {
+            console.log(patient);
             $("#patientForm #IdPatient").val(patient.idPatient);
             $("#patientForm #Name").val(patient.name);
             $("#patientForm #LastName").val(patient.lastName);
@@ -67,6 +74,7 @@ const showPatientModal = e => {
             $("#patientForm #Gender").val(patient.gender);
             $("body").waitMe({text: "Getting Patient Address"});
             $.ajax({url: `/Address/GetAddress/${patient.idAddress}`}).done((address) => {
+                $("#patientForm #IdAddress").val(address.idAddress);
                 $("#patientForm #Street").val(address.street);
                 $("#patientForm #Apartment").val(address.apartment);
                 $("#patientForm #State").val(address.state);
@@ -79,6 +87,11 @@ const showPatientModal = e => {
         });
     }
 }
+/**
+ * When the save button is clicked, prevent the default action, check if the form is valid, show a
+ * loading message, create a formData object from the form, send the formData object to the server, and
+ * if the server responds with a success message, hide the loading message and close the modal.
+ */
 
 const savePatientData = e => {
     e.preventDefault();

@@ -23,13 +23,13 @@
                     <label asp-for="Status"></label>
                     <select class="form-select" asp-for="Status">
                         <option value="">Seleccione...</option>
-                        <option value="0">Activo</option>
-                        <option value="1">Inactivo</option>
+                        <option value="true">Activo</option>
+                        <option value="false">Inactivo</option>
                     </select>
                 </div>
                 <div class="col-auto">
                     <br>
-                    <button class="btn btn-primary">Search</button>
+                    <button class="btn btn-primary" id="btnSearchAppointment">Search</button>
                 </div>
             </div>
         </div>

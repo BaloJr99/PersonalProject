@@ -10,5 +10,6 @@ namespace PersonalProject.Business.Interfaces
     {
         Task<IEnumerable<PatientsAppointmentDTO>> GetTodayMedicalAppointments();
         Task SaveAppointment(PatientsAppointmentDTO appointmentDTO);
+        Task<IEnumerable<PatientsAppointmentDTO>> SearchAppointments(SearchPatientsAppointments search);
     }
 }

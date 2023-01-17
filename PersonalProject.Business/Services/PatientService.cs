@@ -39,12 +39,20 @@ namespace PersonalProject.Business.Services
                 await _uok.CreateTransactionAsync();
 
                 Address address = _mapper.Map<Address>(addressDTO);
-                await _uok.GetRepository<Address>().AddAsync(address);
+                if(address.IdAddress != Guid.Empty){
+                    _uok.GetRepository<Address>().Update(address);
+                }else{
+                    await _uok.GetRepository<Address>().AddAsync(address);
+                }
                 await _uok.SaveChangesAsync();
             
                 Patient patient = _mapper.Map<Patient>(patientDTO);
-                patient.IdAddress = address.IdAddress;
-                await _uok.GetRepository<Patient>().AddAsync(patient);
+                if(patient.IdPatient != Guid.Empty){
+                    _uok.GetRepository<Patient>().Update(patient);
+                }else{
+                    patient.IdAddress = address.IdAddress;
+                    await _uok.GetRepository<Patient>().AddAsync(patient);
+                }
                 await _uok.SaveChangesAsync();
 
                 await _uok.CommitAsync();

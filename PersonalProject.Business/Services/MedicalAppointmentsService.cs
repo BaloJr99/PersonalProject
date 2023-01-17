@@ -35,5 +35,15 @@ namespace PersonalProject.Business.Services
             await _uok.GetRepository<PatientsAppointment>().AddAsync(appointment);
             await _uok.SaveChangesAsync();
         }
-    }
+
+        public async Task<IEnumerable<PatientsAppointmentDTO>> SearchAppointments(SearchPatientsAppointments search)
+        {
+            IEnumerable<PatientsAppointment> appointments = await _uok.GetRepository<PatientsAppointment>().GetAsync(x => 
+                (search.InitialAssignationDate != null ? x.AssignationDate >= search.InitialAssignationDate : true) &&
+                (search.Status != null ? x.AppointmentStatus == search.Status : true) &&
+                (search.FinalAssignationDate != null ? x.AssignationDate <= search.FinalAssignationDate.Value.AddHours(24) : true) &&
+                (search.PatientFullName != null ? string.Concat(x.IdPatientNavigation.Name, " ", x.IdPatientNavigation.LastName).Contains(search.PatientFullName) : true), includeProperties: "IdPatientNavigation");
+            return _mapper.Map<IEnumerable<PatientsAppointmentDTO>>(appointments);
+        }
+    }   
 }
