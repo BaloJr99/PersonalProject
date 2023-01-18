@@ -8,6 +8,8 @@ namespace PersonalProject.Business.Interfaces
 {
     public interface IMedicalAppointmentsService
     {
+        Task CancelAppointment(Guid idAppointment);
+        Task<PatientsAppointmentDTO> GetPatientAppointment(Guid idPatientsAppointments);
         Task<IEnumerable<PatientsAppointmentDTO>> GetTodayMedicalAppointments();
         Task SaveAppointment(PatientsAppointmentDTO appointmentDTO);
         Task<IEnumerable<PatientsAppointmentDTO>> SearchAppointments(SearchPatientsAppointments search);

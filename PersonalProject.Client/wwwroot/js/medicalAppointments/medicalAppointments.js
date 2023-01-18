@@ -2,6 +2,10 @@ $(document).ready(() => {
     $(document).on("click", "#btnAppointmentModal", showAppointmentModal)
     $(document).on("click", "#btnSearchAppointment", searchAppointments)
     $(document).on("click", "#btnSaveAppointment", saveAppointment)
+    $(document).on("click", "#btnCancel", cancelAppointment)
+    $(document).on("click", "#btnReschedule", rescheduleAppointment)
+    $(document).on("hide.bs.modal", "#appointmentModal", clearForm)
+    
     loadMedicalAppointMents();
 })
 
@@ -69,6 +73,10 @@ const searchAppointments = e => {
     });
 }
 
+const clearForm = () => {
+    $("#appointmentForm")[0].reset();
+}
+
 const saveAppointment = e => {
     e.preventDefault();
     if($("#appointmentForm").valid()){
@@ -83,8 +91,8 @@ const saveAppointment = e => {
             if(response.success){
                 successAlert("Appointment Registered");
                 $("#appointmentModal").modal("hide");
-                $("#appointmentForm")[0].reset();
                 $("body").waitMe("hide");
+                clearForm();
                 loadMedicalAppointMents();
             }
         });
@@ -114,6 +122,7 @@ const loadPatients = () => {
 
 const loadMedicalAppointMents = () => {
     var formData = new FormData();
+    $("body").waitMe({text: "Getting Appointments"});
     $.ajax({
         url: "/MedicalAppointments/GetTodayAppointments",
         data: formData,
@@ -156,9 +165,9 @@ const loadMedicalAppointMents = () => {
                 { data: 'idPatientsAppointments', title:"Action", width:"100px", render:(data, type, row) => {
                     if(type == "display"){
                         if(row.appointmentStatus){
-                            return `<div class="d-flex justify-content-between"><button class="btn btn-sm btn-outline-dark d-flex justify-content-center align-items-center" id="btnCancel" data-id=${row.idPatientsAppointments}>
+                            return `<div class="d-flex justify-content-between"><button class="btn btn-sm btn-outline-dark d-flex justify-content-center align-items-center" id="btnReschedule" data-id=${row.idPatientsAppointments}>
                             <span class="material-symbols-outlined">Cancel</span> &nbspReschedule</button>
-                            <button class="btn btn-sm btn-outline-danger d-flex justify-content-center align-items-center" id="btnEditPatient" data-id=${row.idPatientsAppointments}>
+                            <button class="btn btn-sm btn-outline-danger d-flex justify-content-center align-items-center" id="btnCancel" data-id=${row.idPatientsAppointments}>
                             <span class="material-symbols-outlined">Cancel</span> &nbspCancel</button></div>`
                         }else{
                             return ``
@@ -169,5 +178,54 @@ const loadMedicalAppointMents = () => {
                 className:"text-center" }
             ]
         })
+    }).always(() => {
+        $("body").waitMe("hide");
+    });
+}
+
+const cancelAppointment = e => {
+    e.preventDefault()
+    var id = $(e.currentTarget).data("id");
+    $.confirm({
+        title: 'Need Confirmation',
+        content: 'Are you sure to cancel the appointment',
+        theme: 'material',
+        type: 'red',
+        buttons: {
+            confirm: {
+                text: 'YES',
+                btnClass: 'btn-danger',
+                action: () => {
+                    $.ajax({
+                        url: `/MedicalAppointments/CancelAppointment/${id}`,
+                    }).done((response) => {
+                        if(response.success){
+                            successAlert("Appointment Cancelled")
+                        }
+                    });
+                }
+            },
+            cancel: {
+                text: 'NO',
+                btnClass: 'btn-success'
+            },
+        }
+    });
+}
+
+const rescheduleAppointment = e => {
+    e.preventDefault()
+    $("body").waitMe({text: "Rescheduling  Appointment"});
+    var id = $(e.currentTarget).data("id");
+    console.log(id);
+    $("#IdPatientsAppointments").val(id);
+    $.ajax({
+        url: `/MedicalAppointments/GetPatientAppointment/${id}`,
+    }).done((appointment) => {
+        $("#IdPatient").empty()
+        $("#IdPatient").append(`<option>${appointment.patientFullName}</option>`)
+        $("#appointmentModal").modal("show");
+    }).always(() => {
+        $("body").waitMe("hide");
     });
 }

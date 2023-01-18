@@ -33,11 +33,6 @@ namespace PersonalProject.Business.Repositories.Services
             await _Context.Set<TEntity>().AddRangeAsync(entities);
         }
 
-        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
-        {
-            return _Context.Set<TEntity>().Where(predicate);
-        }
-
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return  await _Context.Set<TEntity>().ToListAsync();

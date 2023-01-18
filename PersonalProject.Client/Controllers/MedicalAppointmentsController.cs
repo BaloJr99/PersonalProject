@@ -35,6 +35,22 @@ namespace PersonalProject.Client.Controllers
             return Ok(patients);
         }
 
+        [HttpGet]
+        [Route("/MedicalAppointments/CancelAppointment/{idAppointment}")]
+        public async Task<IActionResult> CancelAppointment(Guid idAppointment)
+        {
+            await _medical.CancelAppointment(idAppointment);
+            return Ok(new { success = true });
+        }
+
+        [HttpGet]
+        [Route("/MedicalAppointments/GetPatientAppointment/{idPatientsAppointments}")]
+        public async Task<IActionResult> GetPatientAppointment(Guid idPatientsAppointments)
+        {
+            PatientsAppointmentDTO patientsAppointment = await _medical.GetPatientAppointment(idPatientsAppointments);
+            return Ok(patientsAppointment);
+        }
+
         [HttpPost]
         public async Task<IActionResult> SaveAppointment([FromForm]PatientsAppointmentDTO appointmentDTO)
         {
